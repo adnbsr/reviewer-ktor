@@ -22,6 +22,11 @@ sourceSets {
     test.resources.srcDirs = ['testresources']
 }
 
+compileKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+
+
 repositories {
     mavenLocal()
     jcenter()
@@ -29,20 +34,38 @@ repositories {
     maven { url 'https://kotlin.bintray.com/kotlin-js-wrappers' }
 }
 
+ext {
+    KGraphQLVersion = "0.3.0"
+}
+
 dependencies {
+
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    compile "io.ktor:ktor-server-netty:$ktor_version"
-    compile "ch.qos.logback:logback-classic:$logback_version"
-    compile "io.ktor:ktor-server-core:$ktor_version"
-    compile "io.ktor:ktor-html-builder:$ktor_version"
     compile "org.jetbrains:kotlin-css-jvm:1.0.0-pre.31-kotlin-1.2.41"
+
+    compile "io.ktor:ktor-server-netty:$ktor_version"
+    compile "io.ktor:ktor-server-core:$ktor_version"
+
     compile "io.ktor:ktor-client-core:$ktor_version"
     compile "io.ktor:ktor-client-core-jvm:$ktor_version"
     compile "io.ktor:ktor-client-apache:$ktor_version"
-    testCompile "io.ktor:ktor-server-tests:$ktor_version"
+    compile "io.ktor:ktor-html-builder:$ktor_version"
+    compile "io.ktor:ktor-locations:$ktor_version"
+    compile "io.ktor:ktor-gson:$ktor_version"
 
-    compile 'org.jetbrains.exposed:exposed:0.13.2'
+
+    compile "ch.qos.logback:logback-classic:$logback_version"
+
+    compile "org.jetbrains.exposed:exposed:0.13.2"
     compile "org.postgresql:postgresql:42.2.2"
+    compile "com.github.pgutkowski:kgraphql:${KGraphQLVersion}"
 
-
+    //Tests
+    testCompile "io.ktor:ktor-server-tests:$ktor_version"
 }
+
+//kotlin {
+//    experimental {
+//        coroutines "enable"
+//    }
+//}

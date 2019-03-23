@@ -1,10 +1,11 @@
 package com.reviewer
 
+import com.reviewer.data.Review
+import com.reviewer.data.Reviews
 import com.reviewer.data.User
+import com.reviewer.data.Users
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
-
-
 
 
 fun main(args: Array<String>) {
@@ -15,16 +16,25 @@ fun main(args: Array<String>) {
     transaction {
 
 
-        SchemaUtils.create(User)
-
-//        User.insert {
-//            it[name] = "Bekir Basar"
-//            it[username] = "bkr"
+        SchemaUtils.create(Users, Reviews)
+//
+//        val hasan = User.new {
+//            name = "Hasan Basar"
+//            username = "hsnbsr"
+//        }
+//
+//        val r = Review.new {
+//            title = "Title"
+//            text = "Text"
+//            user = hasan
 //        }
 
-        User.select {User.username eq "bkr"}.forEach { row ->
-            println(row[User.username])
+        User.find { Users.username eq "hsnbsr" }.forEach { user ->
+           println(user.reviews.toString())
         }
+
+        val hsn = User[28]
+        println(hsn.reviews.count())
 
     }
 
